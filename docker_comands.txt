@@ -1,0 +1,15 @@
+
+===================================================== docker
+docker ps
+docker ps -a
+docker images
+docker stop <container_id>
+docker rm <container_id>
+docker rmi <image_id>
+docker run -d -p 27017:27017 --name mongo mongo:latest
+
+===================================================== mongo
+
+
+===================================================== docker-compose
+docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
