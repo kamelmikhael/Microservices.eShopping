@@ -1,4 +1,10 @@
 services:
+  basket:
+    image: redis:alpine
+
+  mongoclient:
+    image: mongoclient/mongoclient
+
   catalogdb:
     image: mongo
 

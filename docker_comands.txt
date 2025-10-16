@@ -6,10 +6,36 @@ docker images
 docker stop <container_id>
 docker rm <container_id>
 docker rmi <image_id>
-docker run -d -p 27017:27017 --name mongo mongo:latest
+docker exec -it <container_id> bash
+docker logs <container_id>
+docker ps -aq
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi $(docker images -q)
+docker system prune -a
 
-===================================================== mongo
+===================================================== mongo | mongo client
 
+docker run -d -p 27017:27017 --name catalogdb mongo
+docker exec -it catalogdb bash
+
+docker pull mongoclient/mongoclient
+docker run -d -p 3000:3000 --name mongoclient mongoclient/mongoclient
+
+===================================================== Redis
+
+docker pull redis
+docker run -d -p 6379:6379 --name basket redis
+docker logs -f basket
+
+docker exec -it basket bash
+
+>> bash commands
+redis-cli
+ping
+get key
+set key value
 
 ===================================================== docker-compose
 docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
+docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down

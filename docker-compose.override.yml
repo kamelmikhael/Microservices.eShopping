@@ -1,4 +1,16 @@
 services:
+  basket:
+    container_name: basket
+    restart: always
+    ports:
+      - "6379:6379"
+
+  mongoclient:
+    container_name: mongoclient
+    restart: always
+    ports:
+      - "3000:3000"
+
   catalogdb:
     container_name: catalogdb
     restart: always
