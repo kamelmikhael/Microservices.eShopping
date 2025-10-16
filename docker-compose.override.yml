@@ -1,6 +1,16 @@
 services:
-  basket:
-    container_name: basket
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8888:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  basketdb:
+    container_name: basketdb
     restart: always
     ports:
       - "6379:6379"
@@ -29,3 +39,14 @@ services:
       - catalogdb
     ports:
       - "8000:8080"
+
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "CacheSettings:ConnectionString=basketdb:6379"
+    depends_on:
+      - basketdb
+    ports:
+      - "8001:8080"

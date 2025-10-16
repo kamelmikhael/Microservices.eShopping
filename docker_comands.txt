@@ -36,6 +36,12 @@ ping
 get key
 set key value
 
+===================================================== Portainer (Manage Docker through a web interface)
+
+docker volume create portainer_data
+docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
 ===================================================== docker-compose
+
 docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
 docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down

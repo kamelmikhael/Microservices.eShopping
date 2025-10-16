@@ -1,5 +1,8 @@
 services:
-  basket:
+  portainer:
+    image: portainer/portainer-ce
+
+  basketdb:
     image: redis:alpine
 
   mongoclient:
@@ -14,5 +17,12 @@ services:
       context: .
       dockerfile: src/Services/Catalog/Catalog.Api/Dockerfile
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: src/Services/Basket/Basket.Api/Dockerfile
+
 volumes:
   mongo_data:
+  portainer_data:
