@@ -17,9 +17,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 builder.Services.AddScoped<IBaskRepository, BaskRepository>();
 builder.Services.AddScoped<DiscountGrpcService>();
-builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(ptions =>
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
-    ptions.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")
+    options.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")
         ?? throw new Exception("GrpcSettings:DiscountUrl missing"));
 });
 

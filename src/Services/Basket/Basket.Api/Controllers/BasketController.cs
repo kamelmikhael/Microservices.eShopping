@@ -30,6 +30,7 @@ public class BasketController(IBaskRepository baskRepository
     {
         //Communicate with Discount.Grpc
         //to calculate latest prices of product into shopping cart
+
         foreach (var item in basket.Items)
         {
             var coupon = await _discountGrpcService.GetDiscount(item.ProductName);
