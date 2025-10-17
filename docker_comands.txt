@@ -41,6 +41,20 @@ set key value
 docker volume create portainer_data
 docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
+===================================================== PostgreSQL
+
+docker pull postgres
+docker run -d -p 5432:5432 --name postgresdb -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=discountdb postgres
+docker exec -it postgresdb bash
+docker logs -f postgresdb
+
+===================================================== pgAdmin
+
+docker pull dpage/pgadmin4
+docker run -p 80:80 -e PGADMIN_DEFAULT_EMAIL=user@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --name pgadmin -d dpage/pgadmin4
+docker exec -it pgadmin bash
+docker logs -f pgadmin
+
 ===================================================== docker-compose
 
 docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
