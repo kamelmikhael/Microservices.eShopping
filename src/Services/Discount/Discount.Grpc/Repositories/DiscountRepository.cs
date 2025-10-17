@@ -16,16 +16,14 @@ public class DiscountRepository(IConfiguration configuration) : IDiscountReposit
             "SELECT * FROM Coupon WHERE ProductName = @ProductName",
             new { ProductName = productName });
 
-        if (coupon == null)
-        {
-            return new Coupon
-            {
-                ProductName = "No Discount",
-                Amount = 0,
-                Description = "No Discount Description"
-            };
-        }
-        return coupon;
+        return coupon is not null 
+            ? coupon
+            : new Coupon
+                {
+                    ProductName = productName,
+                    Amount = 0,
+                    Description = "No Discount Description"
+                };
     }
 
     public async Task<bool> CreateDiscount(Coupon coupon)

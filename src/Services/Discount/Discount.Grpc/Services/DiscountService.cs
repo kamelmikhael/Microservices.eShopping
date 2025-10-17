@@ -15,10 +15,7 @@ public class DiscountService(
     public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, 
         ServerCallContext context)
     {
-        var coupon = await _repository.GetDiscount(request.ProductName)
-            ?? throw new RpcException(
-                            new Status(StatusCode.NotFound,
-                            $"Discount with ProductName={request.ProductName} is not found."));
+        var coupon = await _repository.GetDiscount(request.ProductName);
 
         _logger.LogInformation("Discount retrieved for ProductName: {ProductName}, Amount: {Amount}",
             coupon.ProductName, coupon.Amount);
