@@ -48,7 +48,7 @@ public class CheckoutOrder
         {
             Order newOrder = MapToOrder(command.Input);
 
-            await _orderRepository.AddAsync(newOrder);
+            _orderRepository.Add(newOrder);
 
             await _orderRepository.SaveChangesAsync(cancellationToken);
 

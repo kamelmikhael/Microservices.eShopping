@@ -48,7 +48,7 @@ public class UpdateOrder
 
             UpdateOrder(command.Request, orderToUpdate);
 
-            await _orderRepository.UpdateAsync(orderToUpdate);
+            _orderRepository.Update(orderToUpdate);
 
             await _orderRepository.SaveChangesAsync(cancellationToken);
 

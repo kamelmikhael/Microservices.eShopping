@@ -2,7 +2,7 @@
 
 public interface IEmailService
 {
-    Task SendAsync(Email email);
+    Task<bool> SendAsync(Email email);
 }
 
 public class Email

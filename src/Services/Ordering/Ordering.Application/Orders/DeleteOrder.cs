@@ -22,7 +22,7 @@ public class DeleteOrder
             var orderToDelete = await _orderRepository.GetByIdAsync(command.Id) 
                 ?? throw new NotFoundException(nameof(Order), command.Id);
 
-            await _orderRepository.DeleteAsync(orderToDelete);
+            _orderRepository.Delete(orderToDelete);
 
             await _orderRepository.SaveChangesAsync(cancellationToken);
 
