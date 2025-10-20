@@ -7,7 +7,7 @@ using Ordering.Domain.Orders;
 
 namespace Ordering.Application.Orders;
 
-public class CkeckoutOrder
+public class CheckoutOrder
 {
     public sealed record Request
     {
