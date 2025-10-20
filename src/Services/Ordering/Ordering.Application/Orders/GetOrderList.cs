@@ -31,7 +31,8 @@ public class GetOrderList
 
     public sealed record Query(string UserName) : IRequest<IEnumerable<Response>>;
 
-    internal sealed class Handler(IReadRepository<Order> orderRepository) 
+    internal sealed class Handler(
+        IReadRepository<Order> orderRepository) 
         : IRequestHandler<Query, IEnumerable<Response>>
     {
         private readonly IReadRepository<Order> _orderRepository = orderRepository;
@@ -41,24 +42,29 @@ public class GetOrderList
             var orders = await _orderRepository.GetAsync(o => o.UserName == request.UserName);
 
             return orders
-                .Select(o => new Response
-                {
-                    Id = o.Id,
-                    UserName = o.UserName,
-                    TotalPrice = o.TotalPrice,
-                    FirstName = o.FirstName,
-                    LastName = o.LastName,
-                    Email = o.Email,
-                    Address = o.Address,
-                    Country = o.Country,
-                    State = o.State,
-                    ZipCode = o.ZipCode,
-                    CardName = o.CardName,
-                    CardNumber = o.CardNumber,
-                    Expiration = o.Expiration,
-                    Cvv = o.Cvv,
-                    PaymentMethod = o.PaymentMethod,
-                });
+                .Select(order => MapToResponse(order));
+        }
+
+        private static Response MapToResponse(Order order)
+        {
+            return new Response
+            {
+                Id = order.Id,
+                UserName = order.UserName,
+                TotalPrice = order.TotalPrice,
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                Email = order.Email,
+                Address = order.Address,
+                Country = order.Country,
+                State = order.State,
+                ZipCode = order.ZipCode,
+                CardName = order.CardName,
+                CardNumber = order.CardNumber,
+                Expiration = order.Expiration,
+                Cvv = order.Cvv,
+                PaymentMethod = order.PaymentMethod,
+            };
         }
     }
 }

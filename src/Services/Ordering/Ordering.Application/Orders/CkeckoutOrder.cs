@@ -35,7 +35,8 @@ public class CkeckoutOrder
 
     public sealed record Command(Request Input) : IRequest<Response>;
 
-    internal sealed class Handler(IWriteRepository<Order> orderRepository
+    internal sealed class Handler(
+        IWriteRepository<Order> orderRepository
         , IEmailService emailService
         , ILogger<Handler> logger) : IRequestHandler<Command, Response>
     {
@@ -43,35 +44,40 @@ public class CkeckoutOrder
         private readonly IEmailService _emailService = emailService;
         private readonly ILogger<Handler> _logger = logger;
 
-        public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(Command command, CancellationToken cancellationToken)
         {
-            var order = new Order
-            {
-                UserName = request.Input.UserName,
-                TotalPrice = request.Input.TotalPrice,
-                FirstName = request.Input.FirstName,
-                LastName = request.Input.LastName,
-                Email = request.Input.Email,
-                Address = request.Input.Address,
-                Country = request.Input.Country,
-                State = request.Input.State,
-                ZipCode = request.Input.ZipCode,
-                CardName = request.Input.CardName,
-                CardNumber = request.Input.CardNumber,
-                Expiration = request.Input.Expiration,
-                Cvv = request.Input.Cvv,
-                PaymentMethod = request.Input.PaymentMethod,
-            };
+            Order newOrder = MapToOrder(command.Input);
 
-            await _orderRepository.AddAsync(order);
+            await _orderRepository.AddAsync(newOrder);
 
             await _orderRepository.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation("Order '{OrderId}' is successfully created.", order.Id);
+            _logger.LogInformation("Order '{OrderId}' is successfully created.", newOrder.Id);
 
-            await SendEmail(order);
+            await SendEmail(newOrder);
 
-            return new Response(order.Id);
+            return new Response(newOrder.Id);
+        }
+
+        private static Order MapToOrder(Request request)
+        {
+            return new Order
+            {
+                UserName = request.UserName,
+                TotalPrice = request.TotalPrice,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Address = request.Address,
+                Country = request.Country,
+                State = request.State,
+                ZipCode = request.ZipCode,
+                CardName = request.CardName,
+                CardNumber = request.CardNumber,
+                Expiration = request.Expiration,
+                Cvv = request.Cvv,
+                PaymentMethod = request.PaymentMethod,
+            };
         }
 
         private async Task SendEmail(Order order)
@@ -95,9 +101,9 @@ public class CkeckoutOrder
         }
     }
 
-    internal sealed class CommandValidator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
-        public CommandValidator()
+        public Validator()
         {
             RuleFor(c => c.Input.UserName).NotEmpty().NotNull();
             RuleFor(c => c.Input.Email).NotEmpty().NotNull().EmailAddress();

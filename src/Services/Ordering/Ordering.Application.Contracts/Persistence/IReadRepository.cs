@@ -17,6 +17,8 @@ public interface IReadRepository<T> where T : EntityBase
         , bool disableTracking = true);
 
     Task<T?> GetByIdAsync(int id);
+    Task<T?> GetOneAsync(Expression<Func<T, bool>> predicate
+        , bool disableTracking = true);
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
