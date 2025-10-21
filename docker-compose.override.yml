@@ -35,6 +35,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  sqlserver:
+    container_name: sqlserver
+    restart: always
+    environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_SA_PASSWORD: "Admin@12345"
+    ports:
+      - "1433:1433"
+
   pgadmin:
     container_name: pgadmin
     restart: always

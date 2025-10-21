@@ -55,6 +55,13 @@ docker run -p 80:80 -e PGADMIN_DEFAULT_EMAIL=user@admin.com -e PGADMIN_DEFAULT_P
 docker exec -it pgadmin bash
 docker logs -f pgadmin
 
+===================================================== SQL Server
+
+docker pull mcr.microsoft.com/mssql/server
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Your_password123" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server
+docker exec -it sqlserver bash
+docker logs -f sqlserver
+
 ===================================================== docker-compose
 
 docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d

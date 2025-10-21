@@ -5,7 +5,7 @@ public abstract class EntityBase : IEquatable<EntityBase>
     public int Id { get; protected set; }
     public string CreatedBy { get; set; } = default!;
     public DateTime CreatedAt { get; set; }
-    public string LastModifiedBy { get; set; } = default!;
+    public string? LastModifiedBy { get; set; } = default!;
     public DateTime? LastModifiedAt { get; set; }
 
     public bool Equals(EntityBase? other)
