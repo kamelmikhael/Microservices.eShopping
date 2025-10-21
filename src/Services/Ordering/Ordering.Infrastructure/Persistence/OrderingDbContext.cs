@@ -4,11 +4,9 @@ using Ordering.SharedKernel;
 
 namespace Ordering.Infrastructure.Persistence;
 
-public class OrderContext : DbContext
+public class OrderingDbContext(
+    DbContextOptions<OrderingDbContext> options) : DbContext(options)
 {
-    public OrderContext(DbContextOptions<OrderContext> options) : base(options)
-    { }
-
     public DbSet<Order> Orders { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

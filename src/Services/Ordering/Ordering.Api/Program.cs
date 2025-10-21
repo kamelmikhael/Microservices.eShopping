@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Ordering.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +44,7 @@ var app = builder.Build();
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
-
+    app.Services.MigrateDatabase(app.Environment.IsDevelopment());
 //}
 
 app.UseAuthorization();

@@ -15,7 +15,7 @@ public static class DependencyInjection
         this IServiceCollection services
         , IConfiguration configuration)
     {
-        services.AddDbContext<OrderContext>(options =>
+        services.AddDbContext<OrderingDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("OrderingDb")));
 
         services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
@@ -25,6 +25,22 @@ public static class DependencyInjection
         services.AddTransient<IEmailService, EmailService>();
 
         services.Configure<EmailSettings>(c => configuration.GetSection(nameof(EmailSettings)));
+
+        return services;
+    }
+
+    public static IServiceProvider MigrateDatabase(this IServiceProvider services
+        , bool isDevelopment)
+    {
+        if(!isDevelopment)
+            return services;
+
+        using var scope = services.CreateScope();
+
+        var dbContext = scope.ServiceProvider.GetRequiredService<OrderingDbContext>()
+            ?? throw new ApplicationException("OrderingDbContext is null");
+
+        dbContext.Database.Migrate();
 
         return services;
     }

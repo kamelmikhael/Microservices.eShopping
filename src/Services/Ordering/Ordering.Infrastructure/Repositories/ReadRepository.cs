@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 
 namespace Ordering.Infrastructure.Repositories;
 
-internal class ReadRepository<T>(OrderContext dbContext) : IReadRepository<T> where T : EntityBase
+internal class ReadRepository<T>(OrderingDbContext dbContext) : IReadRepository<T> where T : EntityBase
 {
-    private readonly OrderContext _dbContext = dbContext;
+    private readonly OrderingDbContext _dbContext = dbContext;
     protected readonly DbSet<T> _dbSet = dbContext.Set<T>();
 
     public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken cancellationToken = default)

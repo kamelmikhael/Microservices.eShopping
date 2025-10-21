@@ -4,7 +4,7 @@ using Ordering.SharedKernel;
 
 namespace Ordering.Infrastructure.Repositories;
 
-internal class WriteRepository<T>(OrderContext dbContext) 
+internal class WriteRepository<T>(OrderingDbContext dbContext) 
     : ReadRepository<T>(dbContext), IWriteRepository<T> where T : EntityBase
 {
     public void Add(T entity)

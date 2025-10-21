@@ -106,3 +106,18 @@ services:
     ports:
       - "8003:8080"
 
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "ConnectionStrings:OrderingDb=Data Source=sqlserver,1433;Database=OrderDb;User ID=sa;Password=Admin@12345;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;"
+      - "EmailSettings:ApiKey=123"
+      - "EmailSettings:FromAddress=admin@mail.com"
+      - "EmailSettings:FromName=Admin"
+    depends_on:
+      - sqlserver
+    ports:
+      - "8004:8080"
+

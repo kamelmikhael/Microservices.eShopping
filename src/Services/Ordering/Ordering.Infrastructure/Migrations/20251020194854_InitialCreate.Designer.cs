@@ -11,7 +11,7 @@ using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.Infrastructure.Migrations
 {
-    [DbContext(typeof(OrderContext))]
+    [DbContext(typeof(OrderingDbContext))]
     [Migration("20251020194854_InitialCreate")]
     partial class InitialCreate
     {

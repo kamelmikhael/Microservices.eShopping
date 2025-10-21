@@ -10,7 +10,7 @@ using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.Infrastructure.Migrations
 {
-    [DbContext(typeof(OrderContext))]
+    [DbContext(typeof(OrderingDbContext))]
     partial class OrderContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -11,7 +11,7 @@ using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.Infrastructure.Migrations
 {
-    [DbContext(typeof(OrderContext))]
+    [DbContext(typeof(OrderingDbContext))]
     [Migration("20251021033447_Alter_LastModifiedBy_AllowNull")]
     partial class Alter_LastModifiedBy_AllowNull
     {
