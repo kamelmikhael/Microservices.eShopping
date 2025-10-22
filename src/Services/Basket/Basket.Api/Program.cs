@@ -1,6 +1,9 @@
 using Basket.Api.GrpcServices;
 using Basket.Api.Repositories;
 using Discount.Grpc.Protos;
+using EventBus.Messages;
+using EventBus.Messages.Common;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,26 +15,31 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString");
+    options.Configuration = builder.Configuration["CacheSettings:ConnectionString"]
+        ?? throw new("CacheSettings:ConnectionString missing");
 });
 
 builder.Services.AddScoped<IBaskRepository, BaskRepository>();
 builder.Services.AddScoped<DiscountGrpcService>();
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
-    options.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")
-        ?? throw new Exception("GrpcSettings:DiscountUrl missing"));
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]
+        ?? throw new("GrpcSettings:DiscountUrl missing"));
 });
+
+builder
+    .Services
+    .AddEventBus();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+{
     app.MapOpenApi();
     app.UseSwagger()
        .UseSwaggerUI();
-//}
+}
 
 app.UseAuthorization();
 

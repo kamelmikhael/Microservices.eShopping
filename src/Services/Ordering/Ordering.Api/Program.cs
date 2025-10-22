@@ -1,7 +1,9 @@
-using Microsoft.EntityFrameworkCore;
+using EventBus.Messages.Common;
 using Ordering.Application;
 using Ordering.Infrastructure;
-using Ordering.Infrastructure.Persistence;
+using MassTransit;
+using Ordering.Api.Consumers;
+using EventBus.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,19 +38,34 @@ builder.Services
     .AddApplicationLayer()
     .AddInfrastructureLayer(builder.Configuration);
 
+builder
+    .Services
+    .AddEventBus(busConfiguratorAction: (busConfigurator) =>
+    {
+        busConfigurator.AddConsumer<BasketCheckoutEventBusConsumer>();
+        //busConfigurator.AddConsumers(typeof(DependencyInjection).Assembly);
+    }, busFactoryConfiguratorAction: (context, configurator) =>
+    {
+        configurator.ReceiveEndpoint(EventBusConstant.BasketCheckoutQueue, c =>
+        {
+            c.ConfigureConsumer<BasketCheckoutEventBusConsumer>(context);
+        });
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+{
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
     app.Services.MigrateDatabase(app.Environment.IsDevelopment());
-//}
+}
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
