@@ -86,8 +86,12 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - "CacheSettings:ConnectionString=basketdb:6379"
       - "GrpcSettings:DiscountUrl=http://discount.grpc:8080"
+      - "MessageBrokerSettings:Host=amqp://rabbitmq:5672"
+      - "MessageBrokerSettings:Username=guest"
+      - "MessageBrokerSettings:Password=guest"
     depends_on:
       - basketdb
+      - rabbitmq
     ports:
       - "8001:8080"
 
@@ -122,8 +126,12 @@ services:
       - "EmailSettings:ApiKey=123"
       - "EmailSettings:FromAddress=admin@mail.com"
       - "EmailSettings:FromName=Admin"
+      - "MessageBrokerSettings:Host=amqp://rabbitmq:5672"
+      - "MessageBrokerSettings:Username=guest"
+      - "MessageBrokerSettings:Password=guest"
     depends_on:
       - sqlserver
+      - rabbitmq
     ports:
       - "8004:8080"
 

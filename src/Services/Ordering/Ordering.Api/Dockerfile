@@ -17,6 +17,7 @@ COPY ["src/Services/Ordering/Ordering.Application/Ordering.Application.csproj", 
 COPY ["src/Services/Ordering/Ordering.Application.Contracts/Ordering.Application.Contracts.csproj", "src/Services/Ordering/Ordering.Application.Contracts/"]
 COPY ["src/Services/Ordering/Ordering.SharedKernel/Ordering.SharedKernel.csproj", "src/Services/Ordering/Ordering.SharedKernel/"]
 COPY ["src/Services/Ordering/Ordering.Domain/Ordering.Domain.csproj", "src/Services/Ordering/Ordering.Domain/"]
+COPY ["src/BuildingBlocks/EventBus.Messages/EventBus.Messages.csproj", "src/BuildingBlocks/EventBus.Messages/"]
 RUN dotnet restore "./src/Services/Ordering/Ordering.Api/Ordering.Api.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Ordering/Ordering.Api"

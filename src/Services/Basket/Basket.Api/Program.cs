@@ -29,7 +29,7 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 
 builder
     .Services
-    .AddEventBus();
+    .AddMessageBroker();
 
 var app = builder.Build();
 

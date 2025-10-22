@@ -40,7 +40,7 @@ builder.Services
 
 builder
     .Services
-    .AddEventBus(busConfiguratorAction: (busConfigurator) =>
+    .AddMessageBroker(busConfiguratorAction: (busConfigurator) =>
     {
         busConfigurator.AddConsumer<BasketCheckoutEventBusConsumer>();
         //busConfigurator.AddConsumers(typeof(DependencyInjection).Assembly);

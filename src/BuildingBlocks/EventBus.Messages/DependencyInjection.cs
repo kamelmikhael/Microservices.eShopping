@@ -7,7 +7,7 @@ namespace EventBus.Messages;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddEventBus(this IServiceCollection services,
+    public static IServiceCollection AddMessageBroker(this IServiceCollection services,
         Action<IBusRegistrationConfigurator>? busConfiguratorAction = null,
         Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator>? busFactoryConfiguratorAction = null)
     {
@@ -23,6 +23,7 @@ public static class DependencyInjection
         {
             busConfigurator.SetKebabCaseEndpointNameFormatter();
 
+            // AddConsumer
             if (busConfiguratorAction is not null) busConfiguratorAction(busConfigurator);
 
             busConfigurator.UsingRabbitMq((context, configurator) =>
@@ -35,7 +36,8 @@ public static class DependencyInjection
                     h.Password(settings.Password);
                 });
 
-                if(busFactoryConfiguratorAction is not null) busFactoryConfiguratorAction(context, configurator);
+                // ReceiveEndpoint
+                if (busFactoryConfiguratorAction is not null) busFactoryConfiguratorAction(context, configurator);
             });
         });
 
