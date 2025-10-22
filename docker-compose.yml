@@ -11,6 +11,9 @@ services:
   discountdb:
     image: postgres
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server
 

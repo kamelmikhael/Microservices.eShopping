@@ -42,6 +42,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.SharedKernel", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Application.Contracts", "src\Services\Ordering\Ordering.Application.Contracts\Ordering.Application.Contracts.csproj", "{5BAF8C62-A052-4A3E-B1CB-3063D4A19C7E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{DCD94EF7-2FFB-4EF8-9EC3-5789AD7A3CAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Messages", "src\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj", "{94305142-8D46-44D9-928F-BE581AF9D9FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,10 @@ Global
 		{5BAF8C62-A052-4A3E-B1CB-3063D4A19C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BAF8C62-A052-4A3E-B1CB-3063D4A19C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BAF8C62-A052-4A3E-B1CB-3063D4A19C7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94305142-8D46-44D9-928F-BE581AF9D9FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94305142-8D46-44D9-928F-BE581AF9D9FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94305142-8D46-44D9-928F-BE581AF9D9FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94305142-8D46-44D9-928F-BE581AF9D9FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +121,8 @@ Global
 		{C58CD338-822E-488B-90CF-3B386941E06A} = {A1B2A398-0923-4F02-9E69-A82D270853E7}
 		{A9C5C3CE-004E-4FDD-9A5F-1FBD1B543CB8} = {A1B2A398-0923-4F02-9E69-A82D270853E7}
 		{5BAF8C62-A052-4A3E-B1CB-3063D4A19C7E} = {A1B2A398-0923-4F02-9E69-A82D270853E7}
+		{DCD94EF7-2FFB-4EF8-9EC3-5789AD7A3CAF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{94305142-8D46-44D9-928F-BE581AF9D9FF} = {DCD94EF7-2FFB-4EF8-9EC3-5789AD7A3CAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C328567E-CACB-4F5D-9AFB-EFB5D7CF61C7}

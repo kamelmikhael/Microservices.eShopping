@@ -35,6 +35,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   sqlserver:
     container_name: sqlserver
     restart: always
@@ -105,7 +112,6 @@ services:
       - discountdb
     ports:
       - "8003:8080"
-
 
   ordering.api:
     container_name: ordering.api
