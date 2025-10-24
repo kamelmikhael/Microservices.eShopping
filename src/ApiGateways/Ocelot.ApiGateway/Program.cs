@@ -1,5 +1,6 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Cache.CacheManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,8 @@ builder.Configuration
         , reloadOnChange: true);
 
 builder.Services
-    .AddOcelot(builder.Configuration);
+    .AddOcelot(builder.Configuration)
+    .AddCacheManager(settings => settings.WithDictionaryHandle());
 
 builder
     .Logging
