@@ -9,7 +9,8 @@
         "discount.api": "StartDebugging",
         "discount.grpc": "StartDebugging",
         "ordering.api": "StartDebugging",
-        "ocelot.apigateway": "StartDebugging"
+        "ocelot.apigateway": "StartDebugging",
+        "shopping.aggregator": "StartDebugging"
       }
     }
   }

@@ -136,6 +136,22 @@ services:
       - "8004:8080"
 
 
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "ApiSettings:CatalogUrl=http://catalog.api:8080"
+      - "ApiSettings:BasketUrl=http://basket.api:8080"
+      - "ApiSettings:OrderingUrl=http://ordering.api:8080"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - ordering.api
+    ports:
+      - "8005:8080"
+
+
   ocelot.apigateway:
     container_name: ocelot.apigateway
     environment:
