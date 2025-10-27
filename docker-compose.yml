@@ -53,17 +53,23 @@ services:
       context: .
       dockerfile: src/Services/Ordering/Ordering.Api/Dockerfile
 
+  shopping.aggregator:
+    image: ${DOCKER_REGISTRY-}shoppingaggregator
+    build:
+      context: .
+      dockerfile: src/ApiGateways/Shopping.Aggregator/Dockerfile
+
   ocelot.apigateway:
     image: ${DOCKER_REGISTRY-}ocelotapigateway
     build:
       context: .
       dockerfile: src/ApiGateways/Ocelot.ApiGateway/Dockerfile
 
-  shopping.aggregator:
-    image: ${DOCKER_REGISTRY-}shoppingaggregator
+  aspnetrunbasics:
+    image: ${DOCKER_REGISTRY-}aspnetrunbasics
     build:
       context: .
-      dockerfile: src/ApiGateways/Shopping.Aggregator/Dockerfile
+      dockerfile: src/WebApps/AspnetRunBasics/Dockerfile
 
 volumes:
   mongo_data:
@@ -71,5 +77,6 @@ volumes:
   postgres_data:
   pgadmin_data:
     
+
 
 

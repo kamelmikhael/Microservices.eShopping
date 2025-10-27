@@ -70,9 +70,13 @@ public class BasketController(IBaskRepository baskRepository
         // create basketCheckoutEvent -- set TotalPrice on basketCheckout eventMessage
         // send checkout event to rabbitmq
         // remove the basket
+        _logger.LogInformation("Basket checkout initiated for user: {UserName}"
+            , basketCheckout.UserName);
+
         var basket = await _baskRepository.GetBasket(basketCheckout.UserName);
         if (basket == null)
         {
+            _logger.LogError("Error: NotFount basket for user: {UserName}", basketCheckout.UserName);
             return BadRequest();
         }
 
@@ -94,9 +98,20 @@ public class BasketController(IBaskRepository baskRepository
             PaymentMethod = basketCheckout.PaymentMethod,
         };
 
-        await _publishEndpoint.Publish(checkoutEvent);
+        _logger.LogInformation("Found basket for user: {UserName} and delet and trying to publish message broker", basketCheckout.UserName);
 
-        await _baskRepository.DeleteBasket(basket.UserName);
+        try
+        {
+            await _publishEndpoint.Publish(checkoutEvent);
+
+            await _baskRepository.DeleteBasket(basket.UserName);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception happen: {Msg}", ex.Message);
+        }
+
+        _logger.LogInformation("Publish and delete success");
 
         return Accepted();
     }

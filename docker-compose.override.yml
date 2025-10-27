@@ -152,6 +152,22 @@ services:
       - "8005:8080"
 
 
+  aspnetrunbasics:
+    container_name: aspnetrunbasics
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "ApiSettings:GatewayAddress=http://ocelot.apigateway:8080"
+    depends_on:
+      - ocelot.apigateway
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8006:8080"
+
+
   ocelot.apigateway:
     container_name: ocelot.apigateway
     environment:
@@ -164,4 +180,3 @@ services:
       - ordering.api
     ports:
       - "8010:8080"
-
