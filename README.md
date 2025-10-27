@@ -46,7 +46,7 @@ We have implemented below **features over the repository**.
 	
 #### Ocelot API Gateway Microservice
 * Develop API Gateways with **Ocelot Reverse Proxy** applying Gateway Routing Pattern
-* Ocelot Reverse Proxy Configuration; Route, Cluster, Path, Transform, Destinations
+* Ocelot Reverse Proxy Configuration
 * **Rate Limiting** with FixedWindowLimiter on Ocelot Reverse Proxy Configuration
 
 #### WebUI ShoppingApp Microservice
