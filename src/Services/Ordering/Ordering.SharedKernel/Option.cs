@@ -1,23 +1,38 @@
 ﻿namespace Ordering.SharedKernel;
 
-public abstract class Option<T>
+public sealed record Option<T>
 {
-    public static Option<T> Some(T value) => new Some<T>(value);
-    public static Option<T> None() => new None<T>();
+    private readonly T _value;
 
-    public abstract TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none);
-}
+    public bool HasValue { get; }
 
-public sealed class Some<T>(T value) : Option<T>
-{
-    public T Value { get; } = value;
+    public T Value => HasValue
+        ? _value
+        : throw new InvalidOperationException("No value present");
 
-    public override TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none)
-        => some(Value);
-}
+    private Option(T value)
+    {
+        _value = value;
+        HasValue = true;
+    }
 
-public sealed class None<T> : Option<T>
-{
-    public override TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none)
-        => none();
+    private Option()
+    {
+        _value = default!;
+        HasValue = false;
+    }
+
+    public static Option<T> Some(T value) => new(value);
+    public static Option<T> None() => new();
+
+    // Functor: map (Select in LINQ)
+    public Option<TResult> Map<TResult>(Func<T, TResult> mapper) =>
+        HasValue ? Option<TResult>.Some(mapper(_value)) : Option<TResult>.None();
+
+    // Monad: bind (SelectMany in LINQ)
+    public Option<TResult> Bind<TResult>(Func<T, Option<TResult>> binder) =>
+        HasValue ? binder(_value) : Option<TResult>.None();
+
+    public TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none) =>
+        HasValue ? some(_value) : none();
 }
